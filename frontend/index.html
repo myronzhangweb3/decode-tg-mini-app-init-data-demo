@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Wishlist</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #000000;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    <script>
+        function base64encode(str) {
+            let encode = encodeURIComponent(str).replace(/%([a-f0-9]{2})/gi, (m, $1) => String.fromCharCode(parseInt($1, 16)))
+            return btoa(encode);
+        }
+
+        let tg = window.Telegram.WebApp.initData;
+        tg = base64encode(tg);
+        document.cookie = "tg_init_data=" + tg;
+        Telegram.WebApp.setHeaderColor('bg_color');
+        window.Telegram.WebApp.expand();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const tgDataDiv = document.createElement('div');
+            tgDataDiv.id = 'tgData';
+            tgDataDiv.innerHTML = "tg_init_data: " + "<br>" + tg;
+            document.body.appendChild(tgDataDiv);
+        });
+    </script>
+</head>
+
+<body>
+<h3>Test Telegram WebAppData</h3>
+</body>
+</html>
+
