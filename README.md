@@ -6,6 +6,11 @@ This repository provides an example of how to decode `window.Telegram.WebApp.ini
 
 ## Usage
 
+### Create a bot
+
+https://telegram.me/BotFather (/newbot)
+
+
 ### Set environment variables
 
 ```shell
@@ -26,6 +31,9 @@ sh run.sh
 ```
 > The front-end needs to be mapped to the public network and accessed using https, e.g. using ngrok
 
+### Create a web app
+
+https://telegram.me/BotFather (/newapp)
 
 ### Open WebApp
 
