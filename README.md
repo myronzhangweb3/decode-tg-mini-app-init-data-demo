@@ -51,3 +51,7 @@ Example of output results:
 auth_header: {"user": ["{\"id\":5276611418,\"first_name\":\"Myron\",\"last_name\":\"Zhang\",\"username\":\"myronzhangweb3\",\"language_code\":\"zh-hans\",\"allows_write_to_pm\":true}"], "chat_instance": ["-6348001789302836739"], "chat_type": ["sender"], "auth_date": ["1722948364"], "hash": ["e998259d18711b135e84498b15f2242fe72da41e92488e712a67e93e38512866"]}
 decode result: {'id': 5276611418, 'first_name': 'Myron', 'last_name': 'Zhang', 'username': 'myronzhangweb3', 'language_code': 'zh-hans', 'allows_write_to_pm': True}
 ```
+
+## Reference projects
+
+- https://github.com/myronzhangweb3/decode-tg-mini-app-init-data-demo
