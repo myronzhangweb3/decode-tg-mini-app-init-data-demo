@@ -15,7 +15,6 @@ TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 def get_auth_check_string(values):
     param_keys = []
 
-    # 遍历查询参数
     for key, v in values.items():
         if key == "hash":
             continue
