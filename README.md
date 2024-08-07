@@ -54,4 +54,4 @@ decode result: {'id': 5276611418, 'first_name': 'Myron', 'last_name': 'Zhang', '
 
 ## Reference projects
 
-- https://github.com/myronzhangweb3/decode-tg-mini-app-init-data-demo
+- https://stackoverflow.com/questions/72044314/how-to-validate-data-received-via-the-telegrams-web-app
