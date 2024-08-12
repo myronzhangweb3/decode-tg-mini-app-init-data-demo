@@ -19,9 +19,9 @@
         }
 
         let tg = window.Telegram.WebApp.initData;
-        alert("tg raw:" + tg);
+        alert("tg initData raw:" + tg);
         tg = base64encode(tg);
-        alert("tg base64:" + tg);
+        alert("tg initData base64:" + tg);
         document.cookie = "tg_init_data=" + tg;
         Telegram.WebApp.setHeaderColor('bg_color');
         window.Telegram.WebApp.expand();
