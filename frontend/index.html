@@ -26,6 +26,11 @@
         Telegram.WebApp.setHeaderColor('bg_color');
         window.Telegram.WebApp.expand();
 
+        let tg = window.Telegram.WebApp.initData;
+        alert("tg initData raw:" + tg);
+        tg = base64encode(tg);
+        alert("tg initData base64:" + tg);
+
         document.addEventListener("DOMContentLoaded", () => {
             const tgDataDiv = document.createElement('div');
             tgDataDiv.id = 'tgData';
