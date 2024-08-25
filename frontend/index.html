@@ -10,6 +10,39 @@
             background-color: #f0f0f0;
             color: #000000;
             font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[readonly], textarea[readonly] {
+            background-color: #e0e0e0;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            resize: none;
+        }
+
+        textarea[readonly] {
+            width: calc(100% - 22px); /* Adjust for padding and border */
+        }
+
+        pre {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
     <script>
@@ -18,29 +51,78 @@
             return btoa(encode);
         }
 
-        function getInitData(){
+        function getInitData() {
             let tg = window.Telegram.WebApp.initData;
             tg = base64encode(tg);
             return tg;
         }
 
-        const tg = getInitData();
-        alert("tg initData base64:" + tg);
-        document.cookie = "tg_init_data=" + tg;
-        Telegram.WebApp.setHeaderColor('bg_color');
-        window.Telegram.WebApp.expand();
+        async function decodeAuth(authHeader) {
+            // Base64 decode
+            const authHeaderBytes = Uint8Array.from(atob(authHeader), c => c.charCodeAt(0));
+            const authHeaderStr = new TextDecoder().decode(authHeaderBytes);
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const tgDataDiv = document.createElement('div');
-            tgDataDiv.id = 'tgData';
-            tgDataDiv.innerHTML = "tg_init_data: " + "<br>" + tg;
-            document.body.appendChild(tgDataDiv);
+            if (!authHeaderStr) {
+                document.getElementById('result').textContent = 'Invalid auth data';
+                return;
+            }
+
+            const query = new URLSearchParams(authHeaderStr);
+            console.log(`auth_header: ${JSON.stringify(Object.fromEntries(query.entries()))}`);
+            const hashValue = query.get('hash');
+            if (!hashValue) {
+                document.getElementById('result').textContent = 'Invalid hash';
+                return;
+            }
+
+            // Output all query parameters
+            let output = '';
+            for (const [key, value] of query.entries()) {
+                output += `${key}: ${value}\n`;
+            }
+
+            document.getElementById('result').textContent = output;
+        }
+
+        function adjustTextareaHeight(textarea) {
+            textarea.style.height = "auto";
+            textarea.style.height = (textarea.scrollHeight) + "px";
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const tg = getInitData();
+            document.cookie = "tg_init_data=" + tg;
+            Telegram.WebApp.setHeaderColor('bg_color');
+            window.Telegram.WebApp.expand();
+
+            const authDataInput = document.getElementById('tgData');
+            authDataInput.value = tg;
+            authDataInput.readOnly = true;
+            adjustTextareaHeight(authDataInput);
+
+            console.log("start to decode auth");
+            await decodeAuth(tg);
+            console.log("decode auth success");
         });
     </script>
 </head>
 
 <body>
-<h3>Test Telegram WebAppData</h3>
+
+<div class="container">
+    <h3>Test Telegram WebAppData</h3>
+    <div>
+        <label for="tgData">Telegram Init Data:</label>
+        <textarea id="tgData" placeholder="loading..." readonly oninput="adjustTextareaHeight(this)"
+                  onclick="this.select()"></textarea>
+    </div>
+    <br>
+
+    <div>
+        <span>Decode Result</span>
+        <pre id="result"></pre>
+    </div>
+</div>
+
 </body>
 </html>
-
